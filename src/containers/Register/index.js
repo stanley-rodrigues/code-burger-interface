@@ -4,28 +4,32 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 
-import LoginImg from '../../assets/loginimg.svg'
 import Logo from '../../assets/logo.svg'
+import RegisterImg from '../../assets/register-image.svg'
 import Button from '../../components/Button'
 import api from '../../services/api'
 import {
   Container,
-  LoginImage,
+  RegisterImage,
   ContainerItens,
   Label,
   Input,
-  SignInLink,
+  SignUpLink,
   ErrorMessage
 } from './styles'
 
-function Login() {
+function Register() {
   const schema = Yup.object().shape({
+    name: Yup.string().required('Nome é obrigatório!'),
     email: Yup.string()
       .email('Digite um email válido!')
       .required('O email é obrigatório!'),
     password: Yup.string()
       .required('A senha é obrigatória!')
-      .min(6, 'A senha deve ter pelo menos 6 caracteres!')
+      .min(6, 'A senha deve ter pelo menos 6 caracteres!'),
+    confirmPassword: Yup.string()
+      .required('A senha é obrigatória!')
+      .oneOf([Yup.ref('password')], 'As senhas devem ser iguais!')
   })
 
   const {
@@ -39,17 +43,19 @@ function Login() {
   const onSubmit = async clientData => {
     try {
       const { status } = await api.post(
-        'sessions',
+        'users',
         {
+          name: clientData.name,
           email: clientData.email,
           password: clientData.password
         },
         { validateStatus: () => true }
       )
+
       if (status === 201 || status === 200) {
-        toast.success('Seja bem Vindo(a)!')
-      } else if (status === 401) {
-        toast.error('Verifique seu email e senha!')
+        toast.success('Cadastro criado com sucesso!')
+      } else if (status === 409) {
+        toast.error('Email já cadastrado faça login para continuar!')
       } else {
         throw new Error()
       }
@@ -60,12 +66,20 @@ function Login() {
 
   return (
     <Container>
-      <LoginImage src={LoginImg} alt="login img" />
+      <RegisterImage src={RegisterImg} alt="login img" />
       <ContainerItens>
         <img src={Logo} alt="logo-code-burger" />
-        <h1>Login</h1>
+        <h1>Cadastre-se</h1>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
-          <Label>Email</Label>
+          <Label error={errors.name?.message}>Nome</Label>
+          <Input
+            type="text"
+            {...register('name')}
+            error={errors.name?.message}
+          />
+          <ErrorMessage>{errors.name?.message}</ErrorMessage>
+
+          <Label error={errors.email?.message}>Email</Label>
           <Input
             type="email"
             {...register('email')}
@@ -73,23 +87,31 @@ function Login() {
           />
           <ErrorMessage>{errors.email?.message}</ErrorMessage>
 
-          <Label>Senha</Label>
+          <Label error={errors.password?.message}>Senha</Label>
           <Input
             type="password"
             {...register('password')}
             error={errors.password?.message}
           />
           <ErrorMessage>{errors.password?.message}</ErrorMessage>
-          <Button type="submit" style={{ marginTop: 66, marginBottom: 28 }}>
-            Sign in
+
+          <Label error={errors.confirmPassword?.message}>Confirmar Senha</Label>
+          <Input
+            type="password"
+            {...register('confirmPassword')}
+            error={errors.confirmPassword?.message}
+          />
+          <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
+          <Button type="submit" style={{ marginTop: 20, marginBottom: 20 }}>
+            Sign Up
           </Button>
         </form>
-        <SignInLink>
-          Não possui conta ? <a>Sign Up</a>
-        </SignInLink>
+        <SignUpLink>
+          Já possui conta? <a style={{ marginLeft: 5 }}> Sign In</a>
+        </SignUpLink>
       </ContainerItens>
     </Container>
   )
 }
 
-export default Login
+export default Register
