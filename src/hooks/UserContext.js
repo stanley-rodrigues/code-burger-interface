@@ -14,9 +14,10 @@ export const UserProvider = ({ children }) => {
 
 export const useUser = () => {
   const context = useContext(UserContext)
-  if (context) {
-    throw new Error('useUser must be used whith UserContext ')
+  if (!context) {
+    throw new Error('useUser must be used with UserContext ')
   }
+  return context
 }
 
 UserProvider.propTypes = {
