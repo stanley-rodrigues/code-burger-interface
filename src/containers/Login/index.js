@@ -20,8 +20,8 @@ import {
 } from './styles'
 
 function Login() {
-  const users = useUser()
-  console.log(users)
+  const { putUserData, userData } = useUser()
+
   const schema = Yup.object().shape({
     email: Yup.string()
       .email('Digite um email válido!')
@@ -41,7 +41,7 @@ function Login() {
 
   const onSubmit = async clientData => {
     try {
-      const { status } = await api.post(
+      const { status, data } = await api.post(
         'sessions',
         {
           email: clientData.email,
@@ -49,6 +49,7 @@ function Login() {
         },
         { validateStatus: () => true }
       )
+
       if (status === 201 || status === 200) {
         toast.success('Seja bem Vindo(a)!')
       } else if (status === 401) {
@@ -56,6 +57,9 @@ function Login() {
       } else {
         throw new Error()
       }
+
+      putUserData(data)
+      console.log(userData)
     } catch (err) {
       toast.error('Falha no sistema, tente novamente!')
     }
