@@ -12,7 +12,7 @@ function MyRoutes() {
       <Routes>
         <Route element={<Login />} path="/login" />
         <Route element={<Register />} path="/cadastro" />
-        <PrivateRoute element={<Home />} path="/" />
+        <Route element={<Home />} path="/" />
       </Routes>
     </Router>
   )
