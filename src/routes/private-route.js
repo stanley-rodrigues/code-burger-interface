@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Outlet, Navigate } from 'react-router-dom'
 
-import Header from '../components/Header'
+import { Header } from '../components'
 
 function PrivateRoute({ component, isAdmin, ...rest }) {
   const user = localStorage.getItem('codeburger:userData')
