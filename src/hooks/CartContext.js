@@ -21,7 +21,7 @@ export const CartProvider = ({ children }) => {
     }
 
     await localStorage.setItem(
-      'codeburger:cartinfo',
+      'codeburger:cartInfo',
       JSON.stringify(newCartProducts)
     )
   }
