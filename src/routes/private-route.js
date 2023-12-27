@@ -10,9 +10,9 @@ function PrivateRoute({ component, isAdmin, ...rest }) {
   if (!user) {
     return <Navigate to="/login" />
   }
-  if (isAdmin && !JSON.parse(user).admin) {
-    return <Navigate to="/" />
-  }
+  // if (isAdmin && !JSON.parse(user).admin) {
+  //   return <Navigate to="/" />
+  // }
 
   return (
     <>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import ProductsLogo from '../../assets/./home-produtos.svg'
 import { CardProduct } from '../../components'
@@ -18,6 +19,13 @@ export function Products() {
   const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
 
+  const { state } = useLocation()
+
+  useEffect(() => {
+    if (state?.categoryId) {
+      setActiveCategory(state.categoryId)
+    }
+  }, [state?.categoryId])
   useEffect(() => {
     async function loadCategories() {
       const { data } = await api.get('categories')
@@ -60,7 +68,7 @@ export function Products() {
             <CategoryButton
               type="button"
               key={category.id}
-              isActiveCategory={activeCategory === category.id}
+              isactivecategory={activeCategory === category.id}
               onClick={() => {
                 setActiveCategory(category.id)
               }}
