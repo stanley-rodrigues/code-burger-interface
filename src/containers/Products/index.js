@@ -26,6 +26,7 @@ export function Products() {
       setActiveCategory(state.categoryId)
     }
   }, [state?.categoryId])
+
   useEffect(() => {
     async function loadCategories() {
       const { data } = await api.get('categories')
