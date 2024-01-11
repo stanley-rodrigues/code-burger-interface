@@ -1,3 +1,4 @@
+import LoupeOutlinedIcon from '@mui/icons-material/LoupeOutlined'
 import NoFoodOutlinedIcon from '@mui/icons-material/NoFoodOutlined'
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined'
 
@@ -10,6 +11,12 @@ const listLinks = [
     label: 'Listar Produtos',
     link: paths.Products,
     icon: NoFoodOutlinedIcon
+  },
+  {
+    id: 3,
+    label: 'Novo Produto',
+    link: paths.NewProduct,
+    icon: LoupeOutlinedIcon
   }
 ]
 
