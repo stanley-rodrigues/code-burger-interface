@@ -8,12 +8,16 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
+import paths from '../../../constants/paths'
 import api from '../../../services/api'
 import formatCurrency from '../../../utils/formatCurrency'
 import { Container, Img, EditIcon } from './styles'
+
 function ListProducts() {
   const [products, setProducts] = useState()
+  const navigate = useNavigate()
   useEffect(() => {
     async function loadOrders() {
       const { data } = await api.get('products')
@@ -29,6 +33,10 @@ function ListProducts() {
       return <CheckCircleOutlinedIcon style={{ color: '#008000' }} />
     }
     return <CancelOutlinedIcon style={{ color: '#cc1717' }} />
+  }
+
+  function editProduct(product) {
+    navigate(paths.EditProduct, { state: { product } })
   }
   return (
     <Container>
@@ -59,7 +67,7 @@ function ListProducts() {
                     <Img src={product.url} alt="imagem-produto" />
                   </TableCell>
                   <TableCell>
-                    <EditIcon />
+                    <EditIcon onClick={() => editProduct(product)} />
                   </TableCell>
                 </TableRow>
               ))}
