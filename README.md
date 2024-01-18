@@ -1,43 +1,5 @@
-# Api hamburgueria REST
-
+# Interface hamburgueria
 Projeto criado para gestão de uma hamburgueria onde o usuário pode se cadastrar e fazer seu pedido.O administrador pode adicionar e remover produtos,categorias, produtos em oferta e modificar pedido. 
-
-## Índice 
-[Instalação](#Instalação)
-
-[Tecnologias utilizadas](#Tecnologias-utilizadas)
-
-[Usuário admin logado](#Usuário-admin-logado)
-
-[Rota categorias](#Rota-categorias)
-
-[Rota produtos](#Rota-produtos)
-
-[Rota pedidos](#Rota-pedidos)
-
-[Usuário cliente logado](#Usuário-cliente-logado)
-
-[Rota pedidos cliente](#Rota-pedidos-cliente)
-
-[Desenvolvedor](#desenvolvedor)
-
-
-## Instalação
-Faça a instalação das seguintes ferramentas: 
-
-[Vscode](https://code.visualstudio.com/download)
-
-[Node.js](https://nodejs.org/en/download)
-
-[Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
-
-[Insomnia](https://insomnia.rest/download)
-
-[Docker](https://www.docker.com/products/docker-desktop/)
-
-[Postbird](https://github.com/Paxa/postbird/releases/tag/0.8.4)
-
-[MongoDB Compass](https://www.mongodb.com/try/download/atlascli)
 
 
 ##
@@ -47,189 +9,92 @@ Faça a instalação das seguintes ferramentas:
 O projeto foi utilizado:
 
 - [x] JavaScript
-- [x] Node
-- [x] Express
-- [x] PostgreSQL
-- [x] mongoBD
-- [x] MVC
+- [x] React
+- [x] Axios
+- [x] Styled-components
+- [x] React-toastify
+- [x] React-select
+- [x] Mui material
+- [x] Material-icon
+- [x] Hook-form
+- [x] React-hook
 - [x] Eslint 
 - [x] Prettier
 - [x] Yup
-- [x] Multer
-- [x] JWT
-- [x] Bcript
+- [x] Prop-types
+- [x] Context api
 
   
 
   ##
 
-Abra o vscode.
-abra um terminal e faça um clone do projeto.
-```
-git clone https://github.com/stanley-rodrigues/api-dev-burger.git
-```
+## Interface
 
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/terminal.png"/>
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/colar%20link%20api.png"/>
+### Login
+Ao acessar a aplicação o usuário é levado a tela de login, caso ele ja esteja cadastrado basta adicionar email e senha para acessar a página principal.
 
-Após fazer o clone ainda com o terminal aberto digite o comando "cd api-dev-burger" e prescione enter. 
-```
-cd api-dev-burger
-```
-Você irá acessar a pasta do projeto.No terminal dê o comando "yarn install" para baixar as dependências do projeto. 
-```
-yarn install
-```
-Após baixar as dependências do projeto, você precisará subir os container com os bancos postgres e mongoDB com os comandos no terminal:
+<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/interface%20devburguer/Login.png" />
 
-```
-docker run --name codeburger-postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
-```
-Depois o container do MongoDB
-```
-docker run --name mongo -p 27017:27017 -d -t mongo
-```
+  ##
 
-Após os dois contaneires criados abra o docker e dê start em ambos.
+Caso ele tente acessar com dados incorretos ou tente acessar sem adicionar os dados será exibido um erro.
 
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/Captura%20de%20Tela%202023-11-16%20%C3%A0s%2021.11.00.png"/>
+<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/interface%20devburguer/LoginValidation.png" />
 
-Retorne ao vscode e no terminal execute o comando:
-```
-yarn sequelize db:migrate
-```
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/migrate.png"/>
-Para criar as tabelas no banco que podem ser vista no postbird. Abra postbird nos campos Username e Password coloque "postgres" e clique em connect.
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/postgres.png"/>
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/postgresTables.png"/>
+##
 
-Retorne ao vscode e no terminal execute o comando:
-```
-yarn dev
-```
-E a aplicação estará rodando.
+### Registrar
+Caso o usuário não tenha acesso ele deveverá clicar em Signup para se cadastrar. E será levado para a pagina de registro.
 
-# Como usar
+<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/interface%20devburguer/Sign%20Up.png" />
 
-abra o insomnia crie uma rota POST e mande pelo body: name,email,password e admin sendo true(para criar um administrador) e false (para usuário cliente).Usando url
-```
-http://localhost:3001/users
-```
+##
 
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/user.png"/>
+Caso tente cadastrar sem os dados ou com eles incorretos será exibido erro.
 
-## Usuário admin logado
+<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/interface%20devburguer/Captura%20de%20Tela%202024-01-18%20%C3%A0s%2014.25.30.png" />
 
-Crie uma rota POST e mande pelo body: email e password. Ao logar será gerado um token (guarde pois será utilizados nas demais rotas).Usando url.
-```
-http://localhost:3001/sessions
-```
+##
 
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/login.png"/>
+### Página principal
 
-### Rota categorias
+Após fazer o login ou cadastrar e realizar o login o usuário será levado a pagina principal, onde será possivel adicionar produtos ao carrinho, ver os produtos em oferta e selecionar a categoria de produtos desejada. 
 
-Crie uma rota POST e mude o body de json para multipart, mandando name e file (foto que representa sua categoria a ser criada).Usando url
-```
-http://localhost:3001/categories
-```
-No campo Auth mude para bearer token e adicione o token gerado no login no campo de valor. E faça a requisição.
+<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/interface%20devburguer/HOME%20PAGE.png" />
 
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/cria%20categoria.png"/>
+##
 
-Para visualizar todas as categorias, crie uma rota GET Usando url
-```
-http://localhost:3001/categories
-```
-No campo Auth mude para bearer token e adicione o token gerado no login no campo de valor. E faça a requisição.
+### Página categorias
 
-Para editar alguma categoria, crie uma rota PUT Usando url e após a / adicione o id gerado na criação da categoria. Para buscar o id de uma categoria basta acessa a rota GET.Mude o body de json para multipart e mande name com o nome que você colocar com valor 
-```
-http://localhost:3001/categories/
-```
-No campo Auth mude para bearer token e adicione o token gerado no login no campo de valor. E faça a requisição.
+Após o usuario selecionar a categoria desejada ele será levado aos produtos filtrados de acordo com a categoria selecionada. Podendo selecionar outras categorias.
 
-### Rota produtos
+<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/interface%20devburguer/produtos.png" />
 
-Crie uma rota POST e mude o body de json para multipart, mandando name, price, category_id(id que é gerado a cada criação de uma categoria, escolha a que melhor representa seu produto) e file (foto que representa seu produto a ser criado).Usando url
-```
-http://localhost:3001/products
-```
+##
 
-No campo Auth mude para bearer token e adicione o token gerado no login no campo de valor. E faça a requisição.
+### Carrinho
 
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/produtos.png"/>
+Após selecionar o produto desejado o usuário será levado a página de carrinho, onde ele poderá adicionar a quantidade de produtos ou retirar produtos. Podendo ser vizualizado também o total de sua compra.
 
-Para visualizar todas os produtos, crie uma rota GET Usando url
-```
-http://localhost:3001/products
-```
-No campo Auth mude para bearer token e adicione o token gerado no login no campo de valor. E faça a requisição.
+<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/interface%20devburguer/checkOut.png" />
 
-Para editar algum produto, crie uma rota PUT Usando url e após a / adicione o id gerado na criação do produto. Para buscar o id de um produto basta acessa a rota GET.Mude o body de json para multipart e mande offer sendo true ou false(se desejar) name(se desejar) file(se desejar)
-```
-http://localhost:3001/products/
-```
-No campo Auth mude para bearer token e adicione o token gerado no login no campo de valor. E faça a requisição.
+##
 
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/editproduto.png"/>
+### Página Admin
 
-### Rota pedidos
+Se o usuário logado for administrador ele será levado a uma página privada onde ele consegue ver os pedidos e seus status, listar produtos, editar produtos como: imagem, nome, categoria, preço e colocar em oferta ou remover e, adicionar novos produtos.
 
-Crie uma rota POST, mandando um array products com objeto contendo id e quantity. id é referente ao id do produto(para buscar o id de um produto basta acessa a rota GET) e quantity a quantidade desejada do item.Usando url
-```
-http://localhost:3001/orders
-```
+<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/interface%20devburguer/Admin%20pedidos.png" />
 
-No campo Auth mude para bearer token e adicione o token gerado no login no campo de valor. E faça a requisição.
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/criarpedido.png"/>
+##
 
-Para visualizar o pedido, crie uma rota GET Usando url
-```
-http://localhost:3001/orders
-```
-No campo Auth mude para bearer token e adicione o token gerado no login no campo de valor. E faça a requisição.
 
-Para editar algum pedido, crie uma rota PUT Usando url e após a / adicione o id gerado na criação do pedido. Para buscar o id de um pedido basta acessa a rota GET.Mandado status e a mensagem desejada no body
-```
-http://localhost:3001/orders/
-```
-No campo Auth mude para bearer token e adicione o token gerado no login no campo de valor. E faça a requisição.
+<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/interface%20devburguer/AdminVisupedidos.png" />
 
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/editorder.png"/>
+##
 
-## Usuário cliente logado
 
-Na rota POST e mande pelo body: name,email,password e admin sendo false (para usuário cliente).Usando url
-```
-http://localhost:3001/users
-```
-
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/user.png"/>
-
-Na rota POST e mande pelo body: email e password. Ao logar será gerado um token (guarde pois será utilizados nas demais rotas).Usando url.
-```
-http://localhost:3001/sessions
-```
-
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/login.png"/>
-
-### Rota pedidos cliente
-
-Na POST, mandando um array products com objeto contendo id e quantity. id é referente ao id do produto(para buscar o id de um produto basta acessa a rota GET) e quantity a quantidade desejada do item.Usando url
-```
-http://localhost:3001/orders
-```
-
-No campo Auth mude para bearer token e adicione o token gerado no login no campo de valor. E faça a requisição.
-<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/api%20Devburguer/criarpedido.png"/>
-
-Para visualizar o pedido, crie uma rota GET Usando url
-```
-http://localhost:3001/orders
-```
-No campo Auth mude para bearer token e adicione o token gerado no login no campo de valor. E faça a requisição.
-
+<img src="https://github.com/stanley-rodrigues/picForReadme/blob/main/interface%20devburguer/Addprodutos.png" />
 
 
 ##  desenvolvedor
